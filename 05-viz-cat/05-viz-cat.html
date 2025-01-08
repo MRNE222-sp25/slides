@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Visualising categorical data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="https://enst320-2022sp.netlify.app/" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="../xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Visualising categorical data
+## <br><br> ENST 320: Environmental Data Science
+### <a href="https://enst320-2022sp.netlify.app/">https://enst320-2022sp.netlify.app/</a>
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://enst222.github.io/website" target="_blank"&gt;ENST 222: Environmental Data Science&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+class: middle
+# Tips
+
+---
+class: inverse
+
+## Be cognizant of chunk ticks
+
+.pull-left[
+Make sure your code is in the gray area of a chunk in between the lines containing the back-ticks and curly brackets. 
+
+.question[What is wrong with this code chunk?]
+]
+
+.pull-right[
+![chunk problem](img/chunks.png)
+]
+---
+class: inverse
+## Be cognizant of parentheses
+
+.pull-left[
+- Make sure every open parenthesis (or bracket) is closed
+
+- Make sure to close parentheses in the correct place (when you have a lot of nested functions, incorrectly closing your parentheses is very easy to do)
+
+.question[What is wrong with this code?]
+]
+
+.pull-right[
+
+```r
+ggplot(mtcars, aes(x = mpg, y = disp) +
+       geom_point())
+```
+
+]
+---
+class: inverse
+## Be cognizant of parentheses
+
+.pull-left[
+- Make sure every open parenthesis (or bracket) is closed
+
+- Make sure to close parentheses in the correct place (when you have a lot of nested functions, incorrectly closing your parentheses is very easy to do)
+
+.question[What is wrong with this code?]
+]
+
+.pull-right[
+
+```r
+ggplot(mtcars, aes(x = mpg, y = disp) +
+       geom_point()
+```
+]
+---
+class: inverse
+## Be cognizant of parentheses
+
+.pull-left[
+- Make sure every open parenthesis (or bracket) is closed
+
+- Make sure to close parentheses in the correct place (when you have a lot of nested functions, incorrectly closing your parentheses is very easy to do)
+
+.question[What is wrong with this code?]
+]
+
+.pull-right[
+
+```r
+ggplot(mtcars, aes(x = mpg, y = disp)) +
+       geom_point()
+```
+
+]
+---
+## Enter your PAT each time you start a new R session
+
+- Type `credentials::set_github_pat("your-PAT")` into the console. 
+
+- Replace your-PAT with the long string of letters and numbers you generated in GitHub
+
+- Your PAT should be cached in RStudio Cloud for 12 hours. You might as well just get into the habit of setting it at the beginning of each new session in which you need to push to or pull from GitHub.
+
+- Save your PAT somewhere on your local computer that is quickly accessible
+
+- **NEVER** include your PAT in a .Rmd file. This is equivalent to including your private password in a shared document.   
+---
+### Keyboard shortcuts (see Help / Keyboard shortcuts help for more info)
+
+**Insert chunk:** Insert a chunk into your .Rmd
+- Mac: cmd + I
+- PC: ctrl + I
+  
+**Run current line of code:** Place your cursor on code that you would like to run in your .Rmd.
+- Mac: cmd + enter
+- PC: ctrol + enter
+
+**Pull up command history:** Place your cursor in the console and hit the up arrow. Your most recent command will appear. Hit the up arrow to see the command you ran before that, etc. 
+
+---
+class: middle
+
+# Recap
+
+---
+
+## Variables
+
+- **Numerical** variables can be classified as **continuous** or **discrete** based on whether or not the variable can take on an infinite number of values or only non-negative whole numbers, respectively.
+
+- If the variable is **categorical**, we can determine if it is **ordinal** based on whether or not the levels have a natural ordering.
+
+---
+
+### Data 
+
+
+```r
+library(openintro)
+loans &lt;- loans_full_schema %&gt;%
+  select(loan_amount, interest_rate, term, grade, 
+         state, annual_income, homeownership, debt_to_income)
+glimpse(loans)
+```
+
+```
+## Rows: 10,000
+## Columns: 8
+## $ loan_amount    &lt;int&gt; 28000, 5000, 2000, 21600, 23000, 5000, 2…
+## $ interest_rate  &lt;dbl&gt; 14.07, 12.61, 17.09, 6.72, 14.07, 6.72, …
+## $ term           &lt;dbl&gt; 60, 36, 36, 36, 36, 36, 60, 60, 36, 36, …
+## $ grade          &lt;ord&gt; C, C, D, A, C, A, C, B, C, A, C, B, C, B…
+## $ state          &lt;fct&gt; NJ, HI, WI, PA, CA, KY, MI, AZ, NV, IL, …
+## $ annual_income  &lt;dbl&gt; 90000, 40000, 40000, 30000, 35000, 34000…
+## $ homeownership  &lt;fct&gt; MORTGAGE, RENT, RENT, RENT, RENT, OWN, M…
+## $ debt_to_income &lt;dbl&gt; 18.01, 5.04, 21.15, 10.16, 57.96, 6.46, …
+```
+
+---
+
+class: middle
+
+# Bar plot
+
+---
+
+## Bar plot: one categorical variable
+
+
+```r
+ggplot(loans, aes(x = homeownership)) +
+  geom_bar()
+```
+
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-6-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Segmented bar plot: two categorical variables
+
+
+```r
+ggplot(loans, aes(x = homeownership, 
+*                 fill = grade)) +
+  geom_bar()
+```
+
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-7-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Segmented bar plot: two categorical variables
+
+
+```r
+ggplot(loans, aes(x = homeownership, fill = grade)) +
+* geom_bar(position = "fill")
+```
+
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+class:inverse
+.question[
+Which bar plot is a more useful representation for visualizing the relationship between homeownership and grade?
+]
+
+.pull-left[
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Customizing bar plots
+
+.panelset[
+.panel[.panel-name[Plot]
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code]
+
+```r
+*ggplot(loans, aes(y = homeownership,
+                  fill = grade)) +
+  geom_bar(position = "fill") +
+* labs(
+*   x = "Proportion",
+*   y = "Homeownership",
+*   fill = "Grade",
+*   title = "Grades of Lending Club loans",
+*   subtitle = "and homeownership of lendee"
+* )
+```
+]
+]
+
+---
+
+class: middle
+
+# Relationships between numerical and categorical variables
+
+---
+
+## We already talked about...
+
+- Coloring and faceting histograms and density plots
+
+- Side-by-side box plots
+
+---
+
+## Violin plots: probability density turned sideways
+
+
+```r
+ggplot(loans, aes(x = homeownership, y = loan_amount)) +
+  geom_violin()
+```
+
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Ridge plots: multiple probability density distributions
+
+
+```r
+library(ggridges)
+ggplot(loans, aes(x = loan_amount, y = grade, fill = grade, color = grade)) + 
+  geom_density_ridges(alpha = 0.5)
+```
+
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-13-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Use use `stat = "identity"` to plot values instead of counts
+
+.panelset[
+.panel[.panel-name[Plot]
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-14-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code]
+
+```r
+ggplot(starwars[1:20,], aes(x = name, y = height)) +
+* geom_bar(stat = "identity")
+```
+]
+]
+
+---
+
+### Plot `name` on the y-axis for better viz
+.panelset[
+.panel[.panel-name[Plot]
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-15-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code]
+
+```r
+ggplot(starwars[1:20,], 
+       aes(x = height, 
+*          y = name)) +
+  geom_bar(stat = "identity")
+```
+]
+]
+
+---
+
+### Reorder `name` by `height` for even better viz (and clean up labels and theme)
+.panelset[
+.panel[.panel-name[Plot]
+&lt;img src="05-viz-cat_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code]
+
+```r
+ggplot(starwars[1:20,], 
+       aes(x = height, 
+*          y = reorder(name, height))) +
+  geom_bar(stat = "identity") +
+* labs(x = "Height (cm)",
+*      y = "",
+*      title = "Starwars character height") +
+* theme_minimal()
+```
+]
+]
+
+---
+
+## If you finish the application exercise early...
+
+- Explore other [ggplot geoms](https://ivelasq.rbind.io/blog/other-geoms/?utm_source=pocket_mylist)!
+
+- Explore different [ggplot theme packages](https://towardsdatascience.com/themes-to-spice-up-visualizations-with-ggplot2-3e275038dafa)!
+
+- Explore different [color palette packages](https://github.com/EmilHvitfeldt/r-color-palettes)!
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

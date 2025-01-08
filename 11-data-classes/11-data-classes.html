@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data classes</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="https://enst222.github.io/website/" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="../xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data classes
+## <br><br> Enviromental Data Science
+### <a href="https://enst222.github.io/website/">https://enst222.github.io/website/</a>
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://enst222.github.io/website" target="_blank"&gt;ENST 222: Environmental Data Science&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+class: middle
+
+# Data classes
+
+---
+
+## Data classes
+
+We've talked about *types* so far, next we'll introduce the concept of *classes*
+
+- Vectors are like Lego building blocks
+
+--
+- We stick them together to build more complicated constructs, e.g. *representations of data*
+
+--
+- The **class** attribute relates to the S3 class of an object which determines its behaviour
+  - You don't need to worry about what S3 classes really mean, but you can read more about it [here](https://adv-r.hadley.nz/s3.html#s3-classes) if you're curious
+
+--
+- Examples: factors, dates, and data frames
+  
+---
+
+## Factors
+
+R uses factors to handle categorical variables, variables that have a fixed and known set of possible values
+
+
+```r
+x &lt;- factor(c("BS", "MS", "PhD", "MS"))
+x
+```
+
+```
+## [1] BS  MS  PhD MS 
+## Levels: BS MS PhD
+```
+
+--
+
+.pull-left[
+
+```r
+typeof(x)
+```
+
+```
+## [1] "integer"
+```
+]
+.pull-right[
+
+```r
+class(x)
+```
+
+```
+## [1] "factor"
+```
+]
+
+
+---
+
+## More on factors
+
+We can think of factors like character (level labels) and an integer (level numbers) glued together
+
+
+```r
+glimpse(x)
+```
+
+```
+##  Factor w/ 3 levels "BS","MS","PhD": 1 2 3 2
+```
+
+```r
+as.integer(x)
+```
+
+```
+## [1] 1 2 3 2
+```
+
+---
+
+## Dates
+
+
+```r
+y &lt;- as.Date("2020-01-01")
+y
+```
+
+```
+## [1] "2020-01-01"
+```
+
+```r
+typeof(y)
+```
+
+```
+## [1] "double"
+```
+
+```r
+class(y)
+```
+
+```
+## [1] "Date"
+```
+
+---
+
+## More on dates
+
+We can think of dates like an integer (the number of days since the origin, 1 Jan 1970) and an integer (the origin) glued together
+
+
+```r
+as.integer(y)
+```
+
+```
+## [1] 18262
+```
+
+```r
+as.integer(y) / 365 # roughly 50 yrs
+```
+
+```
+## [1] 50.03288
+```
+
+---
+
+## Data frames
+
+We can think of data frames like like vectors of equal length glued together
+
+
+```r
+df &lt;- data.frame(x = 1:2, y = 3:4)
+df
+```
+
+```
+##   x y
+## 1 1 3
+## 2 2 4
+```
+
+.pull-left[
+
+```r
+typeof(df)
+```
+
+```
+## [1] "list"
+```
+]
+.pull-right[
+
+```r
+class(df)
+```
+
+```
+## [1] "data.frame"
+```
+]
+
+---
+
+## Lists
+
+Lists are a generic vector container. Vectors of any type can go in them.
+
+
+```r
+l &lt;- list(
+  x = 1:4,
+  y = c("hi", "hello", "jello"),
+  z = c(TRUE, FALSE)
+)
+l
+```
+
+```
+## $x
+## [1] 1 2 3 4
+## 
+## $y
+## [1] "hi"    "hello" "jello"
+## 
+## $z
+## [1]  TRUE FALSE
+```
+
+---
+
+## Lists and data frames
+
+- A data frame is a special list containing vectors of equal length
+- When we use the `pull()` function, we extract a vector from the data frame
+
+
+```r
+df
+```
+
+```
+##   x y
+## 1 1 3
+## 2 2 4
+```
+
+```r
+df %&gt;%
+  pull(y)
+```
+
+```
+## [1] 3 4
+```
+
+
+---
+
+class: middle
+
+# Working with factors
+
+---
+
+
+
+## The data are read data in as character strings
+
+
+```r
+glimpse(cat_lovers)
+```
+
+```
+## Rows: 60
+## Columns: 3
+## $ name           &lt;chr&gt; "Bernice Warren", "Woodrow Stone", "Will…
+## $ number_of_cats &lt;chr&gt; "0", "0", "1", "3", "3", "2", "1", "1", …
+## $ handedness     &lt;chr&gt; "left", "left", "left", "left", "left", …
+```
+
+---
+
+## Defaut plot of "handedness" counts
+
+
+```r
+ggplot(cat_lovers, mapping = aes(x = handedness)) +
+  geom_bar()
+```
+
+&lt;img src="11-data-classes_files/figure-html/unnamed-chunk-15-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Use the forcats package to manipulate factors
+
+
+```r
+cat_lovers %&gt;%
+* mutate(handedness = fct_infreq(handedness)) %&gt;%
+  ggplot(mapping = aes(x = handedness)) +
+  geom_bar()
+```
+
+&lt;img src="11-data-classes_files/figure-html/unnamed-chunk-16-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Come for the functionality
+
+.pull-left[
+... stay for the logo
+]
+.pull-right[
+&lt;img src="img/forcats-part-of-tidyverse.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-left-wide[
+- Factors are useful when you have true categorical data and you want to override the ordering of character vectors to improve display
+- They are also useful in modeling scenarios
+- The **forcats** package provides a suite of useful tools that solve common problems with factors
+]
+
+---
+class: inverse
+.small[
+.your-turn[
+### .hand[Your turn!]
+
+- [RStudio Cloud](http://rstd.io/dsbox-cloud) &gt; `AE 08 - data types and classes` &gt; `forcats.Rmd` 
+]
+]
+---
+
+class: middle
+
+# Working with dates
+
+---
+
+## Make a date
+
+.pull-left[
+&lt;img src="img/lubridate-not-part-of-tidyverse.png" width="65%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+- **lubridate** is the tidyverse-friendly package that makes dealing with dates a little easier
+
+- It's not one of the *core* tidyverse packages: it's installed with `install.packages("tidyverse)` but it's not loaded with it and needs to be explicitly loaded with `library(lubridate)`
+]
+
+---
+class: middle, inverse
+
+.hand[.light-blue[
+we're just going to scratch the surface of working with dates in R here...
+]]
+
+---
+
+## Dates and times in R
+
+- A **date**. Tibbles print this as &lt;`date&gt;`.
+
+- A **time** within a day. Tibbles print this as `&lt;time&gt;`.
+
+- A **date-time** is a date plus a time: it uniquely identifies an instant in time (typically to the nearest second). Tibbles print this as `&lt;dttm&gt;`. Elsewhere in R these are called POSIXct, but I don’t think that’s a very useful name.
+
+---
+
+## When you read in data, check data types
+
+
+```r
+flats &lt;- read_csv("data/flats_sub_2015.csv")
+flats
+```
+
+```
+## # A tibble: 672 × 10
+##   date   time     datetime  depth_m salin…¹    ph do_mg_l turb_…²
+##   &lt;chr&gt;  &lt;time&gt;   &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 7/1/15 00:00:24 7/1/15 0…   0.741    0.12  8.53   10.2      1.9
+## 2 7/1/15 00:15:24 7/1/15 0…   0.706    0.12  8.45    9.91     2  
+## 3 7/1/15 00:30:24 7/1/15 0…   0.687    0.12  8.38    9.68     1.9
+## 4 7/1/15 00:45:24 7/1/15 0…   0.684    0.12  8.29    9.47     2  
+## 5 7/1/15 01:00:23 7/1/15 1…   0.73     0.12  7.94    8.49     6.1
+## 6 7/1/15 01:15:24 7/1/15 1…   0.683    0.12  7.67    7.9      6.1
+## # … with 666 more rows, 2 more variables: chl_ug_l &lt;dbl&gt;,
+## #   t_c &lt;dbl&gt;, and abbreviated variable names ¹​salinity_ppt,
+## #   ²​turb_ntu
+```
+
+--
+
+- `date` was read in as a character
+- `time` was read in as a time
+- `datetime` was read in as a character
+
+---
+
+## Why is this a problem?
+
+
+```r
+ggplot(flats, aes(x = datetime, y = depth_m)) +
+  geom_point()
+```
+
+&lt;img src="11-data-classes_files/figure-html/unnamed-chunk-20-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Why is this a problem?
+
+
+```r
+ggplot(flats[1:5,], aes(x = datetime, y = depth_m)) +
+  geom_point()
+```
+
+&lt;img src="11-data-classes_files/figure-html/unnamed-chunk-21-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Why is this a problem?
+
+
+```r
+ggplot(flats, aes(x = datetime, y = depth_m)) +
+  geom_line()
+```
+
+&lt;img src="11-data-classes_files/figure-html/unnamed-chunk-22-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Using the `lubridate` functions
+
+- `Lubridate` works out the date/time format once you specify the order of components
+
+  - Identify the order in which year, month, and day appear in your dates
+  
+  - Then arrange “y”, “m”, and “d” (year, month, day) and "h", "m", and "s" (hour, minute, second) in the same order.
+  
+  - That gives you the name of the `lubridate` function that will parse your date.
+  
+  - The resulting output is always in **yyyy-mm-dd** format
+
+---
+
+## Using the `lubridate` functions
+
+.small[
+
+```r
+ymd("2017-01-31")
+```
+
+```
+## [1] "2017-01-31"
+```
+
+```r
+mdy("January 31st, 2017")
+```
+
+```
+## [1] "2017-01-31"
+```
+
+```r
+dmy("31-Jan-2017")
+```
+
+```
+## [1] "2017-01-31"
+```
+
+```r
+ymd_hms("2017-01-31 3:15:00")
+```
+
+```
+## [1] "2017-01-31 03:15:00 UTC"
+```
+
+```r
+ymd_hm("2017-01-31 3:15")
+```
+
+```
+## [1] "2017-01-31 03:15:00 UTC"
+```
+
+```r
+ymd(20170131)
+```
+
+```
+## [1] "2017-01-31"
+```
+]
+---
+
+## Coerce `flats` data into dates and datetimes
+
+
+```r
+flats1 &lt;- flats %&gt;%
+* mutate(datetime = mdy_hm(datetime),
+*        date = mdy(date))
+
+flats1
+```
+
+```
+## # A tibble: 672 × 10
+##   date       time     datetime            depth_m salinit…¹    ph
+##   &lt;date&gt;     &lt;time&gt;   &lt;dttm&gt;                &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 2015-07-01 00:00:24 2015-07-01 00:00:00   0.741      0.12  8.53
+## 2 2015-07-01 00:15:24 2015-07-01 00:15:00   0.706      0.12  8.45
+## 3 2015-07-01 00:30:24 2015-07-01 00:30:00   0.687      0.12  8.38
+## 4 2015-07-01 00:45:24 2015-07-01 00:45:00   0.684      0.12  8.29
+## 5 2015-07-01 01:00:23 2015-07-01 01:00:00   0.73       0.12  7.94
+## 6 2015-07-01 01:15:24 2015-07-01 01:15:00   0.683      0.12  7.67
+## # … with 666 more rows, 4 more variables: do_mg_l &lt;dbl&gt;,
+## #   turb_ntu &lt;dbl&gt;, chl_ug_l &lt;dbl&gt;, t_c &lt;dbl&gt;, and abbreviated
+## #   variable name ¹​salinity_ppt
+```
+
+---
+
+## Now it knows the dates are actually datetimes
+
+.panelset[
+.panel[.panel-name[Plot]
+&lt;img src="11-data-classes_files/figure-html/unnamed-chunk-25-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code]
+
+```r
+ggplot(flats1, aes(x = datetime, y = depth_m)) +
+  geom_line() +
+  labs(x = "", y = "Depth (m)") +
+  theme_minimal()
+```
+]
+]
+
+---
+
+## What if your data contain year, month, day, etc. in separate columns?
+
+
+```r
+flats2 &lt;- flats1 %&gt;%
+  select(date, depth_m) %&gt;%
+  separate(date, c("year", "month", "day"))
+flats2
+```
+
+```
+## # A tibble: 672 × 4
+##   year  month day   depth_m
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+## 1 2015  07    01      0.741
+## 2 2015  07    01      0.706
+## 3 2015  07    01      0.687
+## 4 2015  07    01      0.684
+## 5 2015  07    01      0.73 
+## 6 2015  07    01      0.683
+## # … with 666 more rows
+```
+
+---
+
+## What if your data contain year, month, day, etc. in separate columns?
+
+Use the `make_date()` or `make_datetime` functions!
+
+
+```r
+flats2 %&gt;%
+* mutate(date = make_date(year, month, day)) %&gt;%
+  select(date, depth_m)
+```
+
+```
+## # A tibble: 672 × 2
+##   date       depth_m
+##   &lt;date&gt;       &lt;dbl&gt;
+## 1 2015-07-01   0.741
+## 2 2015-07-01   0.706
+## 3 2015-07-01   0.687
+## 4 2015-07-01   0.684
+## 5 2015-07-01   0.73 
+## 6 2015-07-01   0.683
+## # … with 666 more rows
+```
+
+---
+
+## What if you want to get individual components of date/time data?
+Use the `year()`, `month()`, `mday()` (day of the month), `yday()` (day of the year, also known as julian day), `wday()` (day of the week), `hour()`, `minute()` or `second()` functions
+.pull-left[
+
+```r
+datetime &lt;- ymd_hms("2022-02-14 12:34:56")
+
+year(datetime)
+```
+
+```
+## [1] 2022
+```
+
+```r
+month(datetime)
+```
+
+```
+## [1] 2
+```
+]
+
+.pull-right[
+
+```r
+mday(datetime)
+```
+
+```
+## [1] 14
+```
+
+```r
+yday(datetime)
+```
+
+```
+## [1] 45
+```
+
+```r
+wday(datetime)
+```
+
+```
+## [1] 2
+```
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Recoding data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="https://enst222.github.io/website/" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="../xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="../slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Recoding data
+## <br><br> Environmental Data Science
+### <a href="https://enst222.github.io/website/">https://enst222.github.io/website/</a>
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://enst222.github.io/website" target="_blank"&gt;ENST 222: Environmental Data Science&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+---
+
+### There are a LOT of different ways to recode and transform your data in R. 
+
+We will cover a few of them, but Google is your friend to figure out how to recode in your own unique use cases.
+---
+
+## Code-along
+
+.pull-left[
+First load packages:
+
+```r
+library(tidyverse)
+library(janitor)
+```
+]
+
+.pull-right[
+Then tidy the data:
+
+```r
+iris &lt;- as_tibble(iris) %&gt;%
+  clean_names()
+
+iris
+```
+
+```
+## # A tibble: 150 × 5
+##   sepal_length sepal_width petal_length petal_width species
+##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+## 1          5.1         3.5          1.4         0.2 setosa 
+## 2          4.9         3            1.4         0.2 setosa 
+## 3          4.7         3.2          1.3         0.2 setosa 
+## 4          4.6         3.1          1.5         0.2 setosa 
+## 5          5           3.6          1.4         0.2 setosa 
+## 6          5.4         3.9          1.7         0.4 setosa 
+## # … with 144 more rows
+```
+]
+---
+
+### Recode species so that setosa = "a", versicolor = "b", and virginica = "c"
+
+.pull-left[
+
+```r
+distinct(iris, species)
+```
+
+```
+## # A tibble: 3 × 1
+##   species   
+##   &lt;fct&gt;     
+## 1 setosa    
+## 2 versicolor
+## 3 virginica
+```
+]
+---
+
+## Use `mutate()` and `case_match()` to replace or "recode" values
+
+
+```r
+iris %&gt;%
+* mutate(species = case_match(species, "setosa" ~ "a",
+*                             "versicolor" ~ "b",
+*                             "virginica" ~ "c")) %&gt;%
+  distinct(species)
+```
+
+```
+## # A tibble: 3 × 1
+##   species
+##   &lt;chr&gt;  
+## 1 a      
+## 2 b      
+## 3 c
+```
+
+---
+
+## Use .default argument if you want to keep some values the same
+
+
+```r
+iris %&gt;%
+  mutate(species = case_match(species, "setosa" ~ "a",
+*                             .default = species)) %&gt;%
+  distinct(species)
+```
+
+```
+## # A tibble: 3 × 1
+##   species   
+##   &lt;chr&gt;     
+## 1 a         
+## 2 versicolor
+## 3 virginica
+```
+
+---
+
+## Use `mutate()` and `if_else()` if you want to replace values based on certain conditions
+
+If `petal_length` is less than three, recode `petal_length` to "short". Otherwise recode `petal_length` to "long".
+
+```r
+iris
+```
+
+```
+## # A tibble: 150 × 5
+##   sepal_length sepal_width petal_length petal_width species
+##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+## 1          5.1         3.5          1.4         0.2 setosa 
+## 2          4.9         3            1.4         0.2 setosa 
+## 3          4.7         3.2          1.3         0.2 setosa 
+## 4          4.6         3.1          1.5         0.2 setosa 
+## 5          5           3.6          1.4         0.2 setosa 
+## 6          5.4         3.9          1.7         0.4 setosa 
+## # … with 144 more rows
+```
+
+---
+
+## Use `mutate()` and `if_else()` if you want to replace values based on certain conditions
+
+If `petal_length` is less than three, recode `petal_length` to "short". Otherwise recode `petal_length` to "long".
+
+```r
+iris %&gt;%
+* mutate(petal_length = if_else(petal_length &lt; 3, "short", "long"))
+```
+
+```
+## # A tibble: 150 × 5
+##   sepal_length sepal_width petal_length petal_width species
+##          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;fct&gt;  
+## 1          5.1         3.5 short                0.2 setosa 
+## 2          4.9         3   short                0.2 setosa 
+## 3          4.7         3.2 short                0.2 setosa 
+## 4          4.6         3.1 short                0.2 setosa 
+## 5          5           3.6 short                0.2 setosa 
+## 6          5.4         3.9 short                0.4 setosa 
+## # … with 144 more rows
+```
+
+---
+
+## Create a new variable if you want to preserve the original values
+
+
+```r
+iris %&gt;%
+* mutate(petal_category = if_else(petal_length &lt; 3, "short", "long"))
+```
+
+```
+## # A tibble: 150 × 6
+##   sepal_length sepal_width petal_length petal_w…¹ species petal…²
+##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;  
+## 1          5.1         3.5          1.4       0.2 setosa  short  
+## 2          4.9         3            1.4       0.2 setosa  short  
+## 3          4.7         3.2          1.3       0.2 setosa  short  
+## 4          4.6         3.1          1.5       0.2 setosa  short  
+## 5          5           3.6          1.4       0.2 setosa  short  
+## 6          5.4         3.9          1.7       0.4 setosa  short  
+## # … with 144 more rows, and abbreviated variable names
+## #   ¹​petal_width, ²​petal_category
+```
+
+---
+
+## Use `case_when()` for more complicated conditional statements
+
+If `petal_length` is less than or equal to 2, recode `petal_length` to "small". If `petal_length` is greater than 2 and less than or equal to 5, recode to "medium". If `petal_length` is greater than 5, recode to "large".
+
+```r
+iris %&gt;%
+* mutate(petal_category = case_when(petal_length &lt;= 2 ~ "small",
+*                                   petal_length &gt; 2 &amp; sepal_length &lt;= 5 ~ "medium",
+*                                   petal_length &gt; 5 ~ "large")) %&gt;%
+  distinct(petal_category)
+```
+
+```
+## # A tibble: 4 × 1
+##   petal_category
+##   &lt;chr&gt;         
+## 1 small         
+## 2 &lt;NA&gt;          
+## 3 medium        
+## 4 large
+```
+
+---
+
+### Use `TRUE` to index values that were not already defined
+
+For all other values of `petal_length`, recode to "other".
+
+```r
+iris %&gt;%
+  mutate(petal_category = case_when(petal_length &lt;= 2 ~ "small", 
+                                    petal_length &gt; 2 &amp; sepal_length &lt;= 5 ~ "medium", 
+                                    petal_length &gt; 5 ~ "large",
+*                                   TRUE ~ "other")) %&gt;%
+  distinct(petal_category)
+```
+
+```
+## # A tibble: 4 × 1
+##   petal_category
+##   &lt;chr&gt;         
+## 1 small         
+## 2 other         
+## 3 medium        
+## 4 large
+```
+
+---
+
+class:middle
+
+# An example, with some data wrangling too
+
+---
+
+### Create new categorical variable, then group and summarize by that variable
+
+Calculate number of category 3, 4, and 5 storms each decade and plot the results. 
+
+```r
+storms %&gt;%
+  select(name, year, month, day, hour, category)
+```
+
+```
+## # A tibble: 19,066 × 6
+##   name   year month   day  hour category
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Amy    1975     6    27     0       NA
+## 2 Amy    1975     6    27     6       NA
+## 3 Amy    1975     6    27    12       NA
+## 4 Amy    1975     6    27    18       NA
+## 5 Amy    1975     6    28     0       NA
+## 6 Amy    1975     6    28     6       NA
+## # … with 19,060 more rows
+```
+
+---
+
+## First filter so year is between 1980 and 2020 and category &gt;= 3 
+
+
+```r
+storms %&gt;%
+* select(name, year, month, day, hour, category) %&gt;%
+* filter(year &gt;= 1980,
+*        year &lt; 2020,
+*        category &gt; 3)
+```
+
+```
+## # A tibble: 578 × 6
+##   name   year month   day  hour category
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Allen  1980     8     4     6        4
+## 2 Allen  1980     8     4    12        4
+## 3 Allen  1980     8     4    18        4
+## 4 Allen  1980     8     5     0        5
+## 5 Allen  1980     8     5     6        5
+## 6 Allen  1980     8     5    12        5
+## # … with 572 more rows
+```
+
+---
+
+### Then group by year and storm name and calculate the max category reached for each storm and year
+
+.panelset[
+
+.panel[.panel-name[Code]
+
+```r
+storms %&gt;%
+  select(name, year, month, day, hour, category) %&gt;% 
+  filter(year &gt;= 1980, 
+         year &lt; 2020, 
+         category &gt; 3) %&gt;%
+* group_by(name, year) %&gt;%
+* summarize(maxcat = max(category))
+```
+]
+
+.panel[.panel-name[Output]
+
+```
+## # A tibble: 65 × 3
+## # Groups:   name [63]
+##   name     year maxcat
+##   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Allen    1980      5
+## 2 Andrew   1992      5
+## 3 Bill     2009      4
+## 4 Bret     1999      4
+## 5 Charley  2004      4
+## 6 Cindy    1999      4
+## # … with 59 more rows
+```
+]
+]
+
+---
+
+### Next, create a `decade` variable using `mutate()` and `case_when()` based on the `year` variable
+
+.panelset[
+
+.panel[.panel-name[Code]
+
+```r
+storms %&gt;%
+  select(name, year, month, day, hour, category) %&gt;%
+  filter(year &gt;= 1980, 
+         year &lt; 2020, 
+         category &gt; 3) %&gt;%
+  group_by(name, year) %&gt;%
+  summarize(maxcat = max(category)) %&gt;%
+* mutate(decade = case_when(year %in% 1980:1989 ~ "1980s",
+*                           year %in% 1990:1999 ~ "1990s",
+*                           year %in% 2000:2009 ~ "2000s",
+*                           year %in% 2010:2019 ~ "2010s"))
+```
+]
+
+.panel[.panel-name[Output]
+
+```
+## # A tibble: 65 × 4
+## # Groups:   name [63]
+##   name     year maxcat decade
+##   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; 
+## 1 Allen    1980      5 1980s 
+## 2 Andrew   1992      5 1990s 
+## 3 Bill     2009      4 2000s 
+## 4 Bret     1999      4 1990s 
+## 5 Charley  2004      4 2000s 
+## 6 Cindy    1999      4 1990s 
+## # … with 59 more rows
+```
+]
+]
+
+---
+
+### Finally, group by the new decade variable and count the number of storms in each decade
+
+.panelset[
+
+.panel[.panel-name[Code]
+
+```r
+storms %&gt;%
+  select(name, year, month, day, hour, category) %&gt;% 
+  filter(year &gt;= 1980, 
+         year &lt; 2020, 
+         category &gt; 3) %&gt;%
+  group_by(name, year) %&gt;%
+  summarize(maxcat = max(category)) %&gt;%
+  mutate(decade = case_when(year %in% 1980:1989 ~ "1980s",
+                            year %in% 1990:1999 ~ "1990s",
+                            year %in% 2000:2009 ~ "2000s",
+                            year %in% 2010:2019 ~ "2010s")) %&gt;%
+* group_by(decade) %&gt;%
+* summarize(n = n())
+```
+]
+
+.panel[.panel-name[Output]
+
+```
+## # A tibble: 4 × 2
+##   decade     n
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 1980s     10
+## 2 1990s     14
+## 3 2000s     23
+## 4 2010s     18
+```
+]
+]
+
+---
+
+### and then plot!
+
+.panelset[
+
+.panel[.panel-name[Code]
+
+```r
+storms %&gt;%
+  filter(year &gt;= 1980,
+         year &lt; 2020,
+         category &gt; 3) %&gt;%
+  group_by(name, year) %&gt;%
+  summarize(maxcat = max(category)) %&gt;%
+  mutate(decade = case_when(year %in% 1980:1989 ~ "1980s",
+                            year %in% 1990:1999 ~ "1990s",
+                            year %in% 2000:2009 ~ "2000s",
+                            year %in% 2010:2019 ~ "2010s")) %&gt;%
+  group_by(decade) %&gt;%
+  summarize(n = n()) %&gt;%
+* ggplot(aes(x = decade, y = n)) +
+* geom_bar(stat = "identity") +
+* labs(x = "", y = "Number of category 3+ hurricanes") +
+* theme_light()
+```
+]
+
+.panel[.panel-name[Plot]
+&lt;img src="13-data-recode_files/figure-html/unnamed-chunk-19-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
