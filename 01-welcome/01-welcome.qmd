@@ -1,7 +1,7 @@
 ---
 title: "Welcome to ENST/MRNE 222!"
 subtitle: "<br><br> Environmental Data Analysis and Visualization"
-author: "[https://MRNE222-sp25-content.github.io/website](https://MRNE222-sp25-content.github.io/website)"
+author: "[https://mrne222-sp25.github.io/website/](https://mrne222-sp25.github.io/website/)"
 format: 
   revealjs:
     theme: simple
@@ -180,7 +180,7 @@ travel
 
 ## Class website
 
-<https://MRNE222-sp25-content.github.io/website>
+<https://mrne222-sp25.github.io/website/>
 
 -   Contains course materials (slides, schedule, etc.)
 
@@ -287,11 +287,21 @@ You must meet *all* specifications on the final project to earn at least a C in 
 
 ## Late work - application exercises and labs
 
-- Application exercises and labs are due on Fridays. You have an automatic 2-day extension if needed - you don't even have to ask. 
+- Application exercises and labs are due on Fridays. You have an automatic 2-day extension (Sunday) if needed - you don't even have to ask. 
 
 - Solutions will be posted on Mondays and we will go over them in class on Tuesday, so you really need to have them submitted by then.
 
 - You won't "lose points" for late work, but you're not going to learn as much if you already know the answers to the problems in the assignments. Therefore, late submissions should be factored in when determining your final grade.
+
+## Late work - labs
+
+:::{.callout-important}
+
+You need to submit all of the labs assigned before the start of the group project in order to qualify to participate in the group project.
+
+:::
+
+It wouldn’t be fair to your group members if you are not prepared to contribute meaningfully to the project. If you do not complete all of the labs leading up the the group project, you’ll need to complete the project on your own, which means you won’t be able to demonstrate one of the central course learning outcomes: collaborative coding. 
 
 ## Late work - project
 
@@ -299,16 +309,16 @@ You must meet *all* specifications on the final project to earn at least a C in 
 
 - You really need to stick to these in order to stay on track with the project and participate meaningfully in peer review
 
-- However if you'd like to request an extension due to extenuating circumstances, just let me know!
+- However if you'd like to request an extension due to extenuating circumstances, just let me know
 
 
 ## Communication
 
 - I will make announcements via email, so **check your email daily** if you don't already.
 
-- If you have a coding question, please don't ask via email - come to office hours or ask during class or lab, or make an appointment to meet with me. 
+- If you have a coding question, please don't ask via email - come to office hours, ask during class or lab, or make an appointment to meet with me. 
 
-- Feel free to email me or chat with me about anything else
+- Feel free to email me about anything else
 
 - Don't wait till the last minute to complete assignemnts b/c I might not be able to help you in time!
 
