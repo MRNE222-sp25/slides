@@ -891,7 +891,7 @@ ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
 
 ## Question
 
-In the next few slides describe what each plot displays. Think about how
+The next few slides illustrate various ways to facet. Think about how
 the code relates to the output.
 
 :::
