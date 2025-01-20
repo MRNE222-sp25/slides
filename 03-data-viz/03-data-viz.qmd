@@ -16,10 +16,11 @@ editor:
 
 ```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
-library(magick)
 library(Tmisc)
 library(dsbox)
 library(palmerpenguins)
+
+theme_set(theme_grey() + theme(text = element_text(size=20)))
 ```
 
 # What is in a dataset?
@@ -95,7 +96,7 @@ dim(penguins)  # dimensions (row column)
     wrangling/manipulation/transformation -- this is what we'll focus on
     next
 
-# Data visualization
+# Data visualization basics
 
 ## Data visualization
 
@@ -170,6 +171,7 @@ ggplot(data = [dataset],
 ## Hello ggplot2!
 
 -   The ggplot2 package comes with the tidyverse
+-   When you load the tidyverse package by running the code `library(tidyverse)` the ggpplot2 package automatically loads
 
 ```{r echo=TRUE, eval=FALSE}
 library(tidyverse)
@@ -225,7 +227,7 @@ ggplot(quartet, aes(x = x, y = y)) +
   facet_wrap(~ set, ncol = 4)
 ```
 
-# Using the `ggplot()` function to visualize data`
+# Using the `ggplot()` function to visualize data
 
 ---
 
