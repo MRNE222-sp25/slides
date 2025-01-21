@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="04-viz-num_files/libs/clipboard/clipboard.min.js"></script>
-<script src="04-viz-num_files/libs/quarto-html/tabby.min.js"></script>
-<script src="04-viz-num_files/libs/quarto-html/popper.min.js"></script>
-<script src="04-viz-num_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="04-viz-num_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="04-viz-num_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="04-viz-num_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="04-ggplotting_files/libs/clipboard/clipboard.min.js"></script>
+<script src="04-ggplotting_files/libs/quarto-html/tabby.min.js"></script>
+<script src="04-ggplotting_files/libs/quarto-html/popper.min.js"></script>
+<script src="04-ggplotting_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="04-ggplotting_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="04-ggplotting_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="04-ggplotting_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.39">
 
   <meta name="author" content="https://mrne222-sp25.github.io/website/">
-  <title>Visualizing different types of data</title>
+  <title>ggplotting</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="04-viz-num_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="04-viz-num_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="04-ggplotting_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="04-ggplotting_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -94,11 +94,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="04-viz-num_files/libs/revealjs/dist/theme/quarto-423d414d36ce366a9d05f36d06304417.css">
-  <link href="04-viz-num_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="04-viz-num_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="04-viz-num_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="04-viz-num_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="04-ggplotting_files/libs/revealjs/dist/theme/quarto-423d414d36ce366a9d05f36d06304417.css">
+  <link href="04-ggplotting_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="04-ggplotting_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="04-ggplotting_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="04-ggplotting_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -192,7 +192,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Visualizing different types of data</h1>
+  <h1 class="title">ggplotting</h1>
   <p class="subtitle"><br><br> Environmental Data Analysis and Visualization</p>
 
 <div class="quarto-title-authors">
@@ -289,23 +289,23 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <h2>Selected variables</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="syvdymouoz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#syvdymouoz table {
+<div id="yoqeiaqasi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yoqeiaqasi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#syvdymouoz thead, #syvdymouoz tbody, #syvdymouoz tfoot, #syvdymouoz tr, #syvdymouoz td, #syvdymouoz th {
+#yoqeiaqasi thead, #yoqeiaqasi tbody, #yoqeiaqasi tfoot, #yoqeiaqasi tr, #yoqeiaqasi td, #yoqeiaqasi th {
   border-style: none;
 }
 
-#syvdymouoz p {
+#yoqeiaqasi p {
   margin: 0;
   padding: 0;
 }
 
-#syvdymouoz .gt_table {
+#yoqeiaqasi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -331,12 +331,12 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-left-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_caption {
+#yoqeiaqasi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#syvdymouoz .gt_title {
+#yoqeiaqasi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -348,7 +348,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-width: 0;
 }
 
-#syvdymouoz .gt_subtitle {
+#yoqeiaqasi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -360,7 +360,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-top-width: 0;
 }
 
-#syvdymouoz .gt_heading {
+#yoqeiaqasi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -372,13 +372,13 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_bottom_border {
+#yoqeiaqasi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_col_headings {
+#yoqeiaqasi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -393,7 +393,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_col_heading {
+#yoqeiaqasi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -413,7 +413,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   overflow-x: hidden;
 }
 
-#syvdymouoz .gt_column_spanner_outer {
+#yoqeiaqasi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -425,15 +425,15 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 4px;
 }
 
-#syvdymouoz .gt_column_spanner_outer:first-child {
+#yoqeiaqasi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#syvdymouoz .gt_column_spanner_outer:last-child {
+#yoqeiaqasi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#syvdymouoz .gt_column_spanner {
+#yoqeiaqasi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -445,11 +445,11 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   width: 100%;
 }
 
-#syvdymouoz .gt_spanner_row {
+#yoqeiaqasi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#syvdymouoz .gt_group_heading {
+#yoqeiaqasi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -475,7 +475,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   text-align: left;
 }
 
-#syvdymouoz .gt_empty_group_heading {
+#yoqeiaqasi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -490,15 +490,15 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   vertical-align: middle;
 }
 
-#syvdymouoz .gt_from_md > :first-child {
+#yoqeiaqasi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#syvdymouoz .gt_from_md > :last-child {
+#yoqeiaqasi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#syvdymouoz .gt_row {
+#yoqeiaqasi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -517,7 +517,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   overflow-x: hidden;
 }
 
-#syvdymouoz .gt_stub {
+#yoqeiaqasi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -530,7 +530,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#syvdymouoz .gt_stub_row_group {
+#yoqeiaqasi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -544,15 +544,15 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   vertical-align: top;
 }
 
-#syvdymouoz .gt_row_group_first td {
+#yoqeiaqasi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#syvdymouoz .gt_row_group_first th {
+#yoqeiaqasi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#syvdymouoz .gt_summary_row {
+#yoqeiaqasi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -562,16 +562,16 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#syvdymouoz .gt_first_summary_row {
+#yoqeiaqasi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_first_summary_row.thick {
+#yoqeiaqasi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#syvdymouoz .gt_last_summary_row {
+#yoqeiaqasi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -581,7 +581,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_grand_summary_row {
+#yoqeiaqasi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -591,7 +591,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#syvdymouoz .gt_first_grand_summary_row {
+#yoqeiaqasi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -601,7 +601,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-top-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_last_grand_summary_row_top {
+#yoqeiaqasi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -611,11 +611,11 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_striped {
+#yoqeiaqasi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#syvdymouoz .gt_table_body {
+#yoqeiaqasi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -624,7 +624,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_footnotes {
+#yoqeiaqasi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -638,7 +638,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_footnote {
+#yoqeiaqasi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -647,7 +647,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#syvdymouoz .gt_sourcenotes {
+#yoqeiaqasi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -661,7 +661,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#syvdymouoz .gt_sourcenote {
+#yoqeiaqasi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -669,63 +669,63 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#syvdymouoz .gt_left {
+#yoqeiaqasi .gt_left {
   text-align: left;
 }
 
-#syvdymouoz .gt_center {
+#yoqeiaqasi .gt_center {
   text-align: center;
 }
 
-#syvdymouoz .gt_right {
+#yoqeiaqasi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#syvdymouoz .gt_font_normal {
+#yoqeiaqasi .gt_font_normal {
   font-weight: normal;
 }
 
-#syvdymouoz .gt_font_bold {
+#yoqeiaqasi .gt_font_bold {
   font-weight: bold;
 }
 
-#syvdymouoz .gt_font_italic {
+#yoqeiaqasi .gt_font_italic {
   font-style: italic;
 }
 
-#syvdymouoz .gt_super {
+#yoqeiaqasi .gt_super {
   font-size: 65%;
 }
 
-#syvdymouoz .gt_footnote_marks {
+#yoqeiaqasi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#syvdymouoz .gt_asterisk {
+#yoqeiaqasi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#syvdymouoz .gt_indent_1 {
+#yoqeiaqasi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#syvdymouoz .gt_indent_2 {
+#yoqeiaqasi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#syvdymouoz .gt_indent_3 {
+#yoqeiaqasi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#syvdymouoz .gt_indent_4 {
+#yoqeiaqasi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#syvdymouoz .gt_indent_5 {
+#yoqeiaqasi .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -773,23 +773,23 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <h2>Variable types</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="bkfjofpuhd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bkfjofpuhd table {
+<div id="llfprqhyxk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#llfprqhyxk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bkfjofpuhd thead, #bkfjofpuhd tbody, #bkfjofpuhd tfoot, #bkfjofpuhd tr, #bkfjofpuhd td, #bkfjofpuhd th {
+#llfprqhyxk thead, #llfprqhyxk tbody, #llfprqhyxk tfoot, #llfprqhyxk tr, #llfprqhyxk td, #llfprqhyxk th {
   border-style: none;
 }
 
-#bkfjofpuhd p {
+#llfprqhyxk p {
   margin: 0;
   padding: 0;
 }
 
-#bkfjofpuhd .gt_table {
+#llfprqhyxk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -815,12 +815,12 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-left-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_caption {
+#llfprqhyxk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bkfjofpuhd .gt_title {
+#llfprqhyxk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -832,7 +832,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-width: 0;
 }
 
-#bkfjofpuhd .gt_subtitle {
+#llfprqhyxk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -844,7 +844,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-top-width: 0;
 }
 
-#bkfjofpuhd .gt_heading {
+#llfprqhyxk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -856,13 +856,13 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_bottom_border {
+#llfprqhyxk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_col_headings {
+#llfprqhyxk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -877,7 +877,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_col_heading {
+#llfprqhyxk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -897,7 +897,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   overflow-x: hidden;
 }
 
-#bkfjofpuhd .gt_column_spanner_outer {
+#llfprqhyxk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -909,15 +909,15 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 4px;
 }
 
-#bkfjofpuhd .gt_column_spanner_outer:first-child {
+#llfprqhyxk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bkfjofpuhd .gt_column_spanner_outer:last-child {
+#llfprqhyxk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bkfjofpuhd .gt_column_spanner {
+#llfprqhyxk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -929,11 +929,11 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   width: 100%;
 }
 
-#bkfjofpuhd .gt_spanner_row {
+#llfprqhyxk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bkfjofpuhd .gt_group_heading {
+#llfprqhyxk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -959,7 +959,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   text-align: left;
 }
 
-#bkfjofpuhd .gt_empty_group_heading {
+#llfprqhyxk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -974,15 +974,15 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   vertical-align: middle;
 }
 
-#bkfjofpuhd .gt_from_md > :first-child {
+#llfprqhyxk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bkfjofpuhd .gt_from_md > :last-child {
+#llfprqhyxk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bkfjofpuhd .gt_row {
+#llfprqhyxk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1001,7 +1001,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   overflow-x: hidden;
 }
 
-#bkfjofpuhd .gt_stub {
+#llfprqhyxk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1014,7 +1014,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#bkfjofpuhd .gt_stub_row_group {
+#llfprqhyxk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1028,15 +1028,15 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   vertical-align: top;
 }
 
-#bkfjofpuhd .gt_row_group_first td {
+#llfprqhyxk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bkfjofpuhd .gt_row_group_first th {
+#llfprqhyxk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bkfjofpuhd .gt_summary_row {
+#llfprqhyxk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1046,16 +1046,16 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#bkfjofpuhd .gt_first_summary_row {
+#llfprqhyxk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_first_summary_row.thick {
+#llfprqhyxk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bkfjofpuhd .gt_last_summary_row {
+#llfprqhyxk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1065,7 +1065,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_grand_summary_row {
+#llfprqhyxk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1075,7 +1075,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#bkfjofpuhd .gt_first_grand_summary_row {
+#llfprqhyxk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1085,7 +1085,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-top-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_last_grand_summary_row_top {
+#llfprqhyxk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1095,11 +1095,11 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_striped {
+#llfprqhyxk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bkfjofpuhd .gt_table_body {
+#llfprqhyxk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1108,7 +1108,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-bottom-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_footnotes {
+#llfprqhyxk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1122,7 +1122,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_footnote {
+#llfprqhyxk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1131,7 +1131,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#bkfjofpuhd .gt_sourcenotes {
+#llfprqhyxk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1145,7 +1145,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   border-right-color: #D3D3D3;
 }
 
-#bkfjofpuhd .gt_sourcenote {
+#llfprqhyxk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1153,63 +1153,63 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
   padding-right: 5px;
 }
 
-#bkfjofpuhd .gt_left {
+#llfprqhyxk .gt_left {
   text-align: left;
 }
 
-#bkfjofpuhd .gt_center {
+#llfprqhyxk .gt_center {
   text-align: center;
 }
 
-#bkfjofpuhd .gt_right {
+#llfprqhyxk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bkfjofpuhd .gt_font_normal {
+#llfprqhyxk .gt_font_normal {
   font-weight: normal;
 }
 
-#bkfjofpuhd .gt_font_bold {
+#llfprqhyxk .gt_font_bold {
   font-weight: bold;
 }
 
-#bkfjofpuhd .gt_font_italic {
+#llfprqhyxk .gt_font_italic {
   font-style: italic;
 }
 
-#bkfjofpuhd .gt_super {
+#llfprqhyxk .gt_super {
   font-size: 65%;
 }
 
-#bkfjofpuhd .gt_footnote_marks {
+#llfprqhyxk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bkfjofpuhd .gt_asterisk {
+#llfprqhyxk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bkfjofpuhd .gt_indent_1 {
+#llfprqhyxk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bkfjofpuhd .gt_indent_2 {
+#llfprqhyxk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bkfjofpuhd .gt_indent_3 {
+#llfprqhyxk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bkfjofpuhd .gt_indent_4 {
+#llfprqhyxk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bkfjofpuhd .gt_indent_5 {
+#llfprqhyxk .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1271,7 +1271,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1292,7 +1292,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1313,7 +1313,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1358,7 +1358,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1369,7 +1369,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <h2>Histogram</h2>
 <p>How would you describe the distribution of trout lengths? What might be causing this?</p>
 
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
 <section id="change-the-width-of-data-bins-using-the-bin_width-argument-in-the-geom_histogram-layer" class="slide level2">
 <h2>Change the width of data bins using the <code>bin_width</code> argument in the <code>geom_histogram()</code> layer</h2>
 <div class="panel-tabset">
@@ -1382,7 +1382,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:50.0%"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:50.0%"></p>
 </figure>
 </div>
 </div>
@@ -1395,7 +1395,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-10-1.png" style="width:50.0%"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-10-1.png" style="width:50.0%"></p>
 </figure>
 </div>
 </div>
@@ -1408,7 +1408,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-11-1.png" style="width:50.0%"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-11-1.png" style="width:50.0%"></p>
 </figure>
 </div>
 </div>
@@ -1427,7 +1427,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1468,7 +1468,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1479,7 +1479,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <h2>Fill with a categorical variable</h2>
 <p>What does coloring the bars by section show?</p>
 
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
 <section id="facet-with-a-categorical-variable" class="slide level2">
 <h2>Facet with a categorical variable</h2>
 <div class="columns">
@@ -1499,7 +1499,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1519,7 +1519,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <span id="cb13-2"><a href=""></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
 <section id="adjust-bandwidth-amount-of-smoothing" class="slide level2">
 <h2>Adjust “bandwidth” (amount of smoothing)</h2>
 <div class="panel-tabset">
@@ -1532,7 +1532,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1545,7 +1545,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1558,7 +1558,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1577,7 +1577,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1605,7 +1605,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1637,7 +1637,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1647,7 +1647,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1688,7 +1688,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <span id="cb19-2"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
 <section id="box-plot-with-one-numeric-variable-1" class="slide level2" data-visibility="uncounted">
 <h2>Box plot with one numeric variable</h2>
 <p>For a horizontal boxplot, map the numeric variable to the <em>x-axis</em></p>
@@ -1697,7 +1697,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <span id="cb20-2"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
 <section id="box-plot-and-outliers" class="slide level2">
 <h2>Box plot and outliers</h2>
 <div class="columns">
@@ -1708,7 +1708,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1735,7 +1735,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1751,7 +1751,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1761,7 +1761,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1781,7 +1781,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <span id="cb23-2"><a href=""></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-30-1.png" width="960" class="r-stretch"></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-30-1.png" width="960" class="r-stretch"></section>
 <section id="scatterplot-1" class="slide level2">
 <h2>Scatterplot</h2>
 <p>Adjust transparency (alpha) to see overlapping points</p>
@@ -1790,7 +1790,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <span id="cb24-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section></section>
+<img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section id="more-plots" class="title-slide slide level1 center">
 <h1>More plots!</h1>
@@ -1810,7 +1810,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1833,7 +1833,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1854,7 +1854,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1875,7 +1875,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1899,7 +1899,7 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-viz-num_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
+<p><img data-src="04-ggplotting_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1944,19 +1944,19 @@ $ sampledate &lt;date&gt; 1990-08-16, 1992-09-02, 1992-09-02, 1992-09-02, 1992-0
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="04-viz-num_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="04-viz-num_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="04-viz-num_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="04-viz-num_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="04-ggplotting_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

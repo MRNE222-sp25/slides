@@ -1,5 +1,5 @@
 ---
-title: "Visualizing different types of data"
+title: "ggplotting"
 subtitle: "<br><br> Environmental Data Analysis and Visualization"
 author: "[https://mrne222-sp25.github.io/website/](https://mrne222-sp25.github.io/website/)"
 format: 
