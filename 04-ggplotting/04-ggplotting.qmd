@@ -699,29 +699,3 @@ ggplot(starwars, aes(x = height,
 ```
 :::
 :::
-
-# Your turn
-
-## Don't forget to set your PAT in Posit Cloud before you start!
-
-1. Open Posit Cloud
-2. Open any project
-3. Type the following into the console. Copy and paste your PAT into the console when prompted.
-
-```{r eval=FALSE, echo=TRUE}
-gitcreds::gitcreds_set()
-```
-
-Hopefully this will cache your PATs so you don't need to re-enter them every time you start a new Posit Cloud session.
-
-## lab-02
-
-- Go to our class GitHub organization page: [https://github.com/MRNE222-sp25-activities](https://github.com/MRNE222-sp25-activities)
-- Find a repo titled lab-02-your-github-username
-- Click on the green <> Code button and copy the repo URL
-- Go to the class Posit Cloud workspace
-- Go to File -> New project -> New project from Git repository
-- Paste the repo URL into the "URL of your Git Repository" box
-
-You should now be able to open the lab-02.qmd file and edit it directly to complete the exercise
-Don't forget to **stage, commit, then push** your changes back to GitHub when you're done with the exercise.

@@ -971,7 +971,7 @@ ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
 3. Type the following into the console. Copy and paste your PAT into the console when prompted.
 
 ```{r eval=FALSE, echo=TRUE}
-usethis::gitcreds_set()
+gitcreds::gitcreds_set()
 ```
 
 Hopefully this will cache your PATs so you don't need to re-enter them every time you start a new Posit Cloud session.
