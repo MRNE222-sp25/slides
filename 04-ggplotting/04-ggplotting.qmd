@@ -699,3 +699,17 @@ ggplot(starwars, aes(x = height,
 ```
 :::
 :::
+
+# Your turn
+
+## lab-02
+
+- Go to our class GitHub organization page: https://github.com/MRNE222-sp25-activities
+- Find a repo titled lab-02-your-github-username
+- Click on the green <> Code button and copy the repo URL
+- Go to the class Posit Cloud workspace
+- Open any project and set your PAT by typing `gitcreds::gitcreds_set()` into the console. Enter your PAT (no quotes) when prompted
+- Go to File -> New project -> New project from Git repository
+- Paste the repo URL into the "URL of your Git Repository" box
+- Open the lab-02 qmd file and edit it directly to complete the exercise
+- Don't forget to **render, stage, commit, and push** your changes to GitHub when you're done with the exercise.
