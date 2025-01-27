@@ -16,25 +16,24 @@ execute:
   echo: true
 ---
 
-## We drew the owl, now let's dive into the steps you need to get this result on your own with any dataset
+## We drew the owl, now let's dive into the things you need to know get this result *on your own* with *any dataset*
 
-![](img/draw-the-owl.jpg)
+![](img/draw-the-owl.jpg){fig-align="center"}
 
 
 ## You are already asking the right questions
 
-- How can I change the values of a categorical variable if they are not informative (e.g., change OG to old growth)
+- How can I change the values of a categorical variable if they are not informative (e.g., change "OG" to "old growth")
 - How can I calculate summary statistics (e.g., mean, max, min, etc.)
-- What if I only need to analyze a subset of the columns or rows?
+- What if I only want to analyze a subset of the columns or rows?
 - How can I remove missing values (NAs)?
 
-## We almost always need to transform our data to get what we need out of it
 
-![](img/transform-functions.png)
+## We almost always need to transform our data to do the things we want to do
 
-## `dplyr` functions for data transformation...
+![](img/dplyr-horst.png){fig-align="center"}
 
-... based on the concept of functions as verbs that manipulate data frames
+## `dplyr` functions for data transformation
 
 ::: {.columns}
 ::: {.column width = "30%"}
@@ -44,6 +43,7 @@ execute:
 :::
 
 ::: {.column width = "70%"}
+::: {style="font-size: 90%;"}
 - `select`: pick columns by name
 - `arrange`: reorder rows
 - `slice`: pick rows using index(es)
@@ -53,20 +53,23 @@ execute:
 - `summarise`: reduce variables to values
 - `group_by`: for grouped operations
 - ... (many more)
+:::
 
 :::
 :::
 
 ## Rules of `dplyr` functions
 
-- First argument is *always* a data frame
+How functions work in R: `function_name(arguments...)` = output...
+
+- With `dplyr` functions, the first argument is *always* a data frame
 
 - Subsequent arguments say what to do with that data frame
 
-- A data frame is always returned
+- A data frame is always returned as the output
 
 
-## Data: Hotel bookings
+## Example data: Hotel bookings
 
 - Data[^1] from two hotels: one resort and one city hotel
 - Observations: Each row represents a hotel booking
@@ -80,14 +83,14 @@ hotels <- read_csv("data/hotels.csv")
 [^1]: Source: [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-11/readme.md)
 
 
-## First look: Variables
+## Look at the variable names in the `hotels` data frame
 
 ```{r output.lines=18}
 names(hotels)
 ```
 
 
-## Second look: Overview
+## Look at data types and first few observations in the `hotels` data frame
 
 ```{r output.lines=18}
 glimpse(hotels)
@@ -96,25 +99,50 @@ glimpse(hotels)
 
 ## How to use `dplyr` functions: example with `select`
 
-View only `lead_time` (number of days between booking and arrival date):
+We want to only include the `lead_time` column (`lead_time`= number of days between booking and arrival date):
 
 ::: {.columns}
 
 ::: {.column width = "50%" .fragment}
 ```{r}
-hotels
+hotels # original hotels data frame
 ```
 :::
 
 ::: {.column width = "50%" .fragment}
 
 ```{r}
-select(hotels, lead_time)
+select(hotels, lead_time) # select only lead_time
 ```
 :::
 :::
 
+## FYI - commenting
 
+::: {style="font-size: 80%;"}
+In R, you can use the `#` for adding comments to your code. 
+Any text following `#` will be printed as is, and won't be run as R code.
+This is useful for leaving comments in your code and for temporarily disabling 
+certain lines of code while debugging.
+<br>
+<br>
+:::
+
+::: {.columns}
+::: {.column width = "70%"}
+```{r comment, eval=FALSE}
+#| code-line-numbers: "|2|3|4"
+hotels |> 
+  # slice the first five rows   # this line is a comment
+  # select(hotel) |>            # this one has code but doesn't run
+  select(is_canceled)           # this line runs (no #)
+```
+:::
+::: {.column width = "30%"}
+```{r ref.label = "comment", echo=FALSE}
+```
+:::
+:::
 ## How to use `dplyr` functions: example with `select` {visibility="uncounted"}
 
 ::: {.columns}
@@ -240,35 +268,13 @@ hotels |>
 
 In programming, a pipe is a technique for passing information from one process to another.
 
-::: {.columns}
-::: {.column width = "50%"}
-
-- Start with the `hotels` data frame and pass it to the `select()` function
-- Select the variables `hotel` and `lead_time`
-- Then arrange the data frame by `lead_time` in descending order
-:::
-::: {.column width = "50%"}
-```{r}
-#| code-line-numbers: "3"
-
-hotels |> 
-  select(hotel, lead_time) |> 
-  arrange(desc(lead_time))
-```
-:::
-:::
-
-## How does a pipe work?
-
 - You can think about the following sequence of actions - find keys, 
 unlock car, start car, drive to work, park.
-
-## How does a pipe work? {visibility="uncounted"}
-
-Expressed as a set of nested functions in R pseudocode this would look like:
+- You need the first action in order to complete the second action
+- Expressed as a set of nested functions in R pseudocode this would look like:
 <br>
 ```{r eval=FALSE}
-park(drive(start_car(find("keys")), to = "work"))
+park(drive(start_car(find("keys"))))
 ```
 
 ## How does a pipe work? {visibility="uncounted"}
@@ -282,6 +288,46 @@ find("keys") |>
   drive(to = "work") |> 
   park()
 ```
+
+## How does a pipe work? {visibility="uncounted"}
+
+Start with a data frame
+```{r}
+hotels
+```
+
+## How does a pipe work? {visibility="uncounted"}
+
+Pipe the data down to the next line. With `dplyr` functions, data is *always* the first argument. When we pipe, we are telling R to use the output of the previous line as the data argument. The data argument is now implicit. 
+```{r}
+hotels |>                     
+  select(lead_time, is_canceled)
+```
+
+## How does a pipe work? {visibility="uncounted"}
+
+Now, pipe the output of line 2 to line 3. The output of line 2 implicitly becomes the data argument for line 3. 
+```{r}
+hotels |>                     
+  select(lead_time, is_canceled) |>           
+  slice_head(n=5) 
+```
+
+## How does a pipe work? {visibility="uncounted"}
+
+Pipe one more time from line 3 to line 4. The output of line 3 implicitly becomes the data argument for line 4. You can pipe as many more times as you want/need. 
+```{r}
+hotels |>                     
+  select(lead_time, is_canceled) |>           
+  slice_head(n = 5) |> 
+  arrange(lead_time)
+```
+
+## How does a pipe work? {visibility="uncounted"}
+
+Pipes allow us to use a sequence of functions on a dataset without having to save the output as a new object at each step. The output is piped from one step to the next and implicitly used as the data argument.
+
+![](img/pipes.png){fig-align="center"}
 
 ## A note on piping (dplyr) and layering (ggplot)
 
@@ -306,7 +352,11 @@ hotels |>
   select(hotel, lead_time)
 ```
 
-# You might see `%>%`. This is also a pipe (from the `magrittr` package). R now has it's own build-in pipe operator `|>` so that's what most people use now.
+::: {style="font-size: 75%;"}
+# You might see `%>%`. This is also a pipe (from the `magrittr` package). R now has it's own build-in pipe operator `|>` so that's what most people use.
+:::
+
+# `dplyr` functions rundown
 
 # `dplyr::select`
 
@@ -399,19 +449,6 @@ hotels |>
   slice(1:5) 
 ```
 
-## FYI - commenting
-
-In R, you can use the `#` for adding comments to your code. 
-Any text following `#` will be printed as is, and won't be run as R code.
-This is useful for leaving comments in your code and for temporarily disabling 
-certain lines of code while debugging.
-
-```{r}
-hotels |> 
-  # slice the first five rows  # this line is a comment
-  # select(hotel) |>            # this one doesn't run
-  slice(1:5)                   # this line runs
-```
 
 # `dplyr::filter`
 
@@ -442,7 +479,11 @@ hotels |>
 :::
 
 :::{.column width = "50%"}
-  `==` and `>=` are "logical operators"
+::: {.incremental}
+-  `==` and `>=` are two of many "logical operators" that we use to produce TRUE/FALSE results. 
+- When used in conjunction with `filter`, only the TRUE results are retained in the resulting data frame 
+- e.g., only results where `adults` is equal to 0 and `children` is greater than or equal to 1 are retained.
+:::
 :::
 :::
 
@@ -472,7 +513,10 @@ operator     | definition
 :::
 :::
 
-# Try it: ae-04 1-4
+## Try it: ae-04 1-4
+
+- Before you try to push any changes, don't forget to use `gitcreds::gitcreds_set` to set your PAT.
+- Before pushing, make sure to *render, stage, commit* and then *push*
 
 # `dplyr::distinct` and `dplyr::count`
 
