@@ -355,7 +355,7 @@ $z
 1 1 3
 2 2 4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>df <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>df <span class="sc">|&gt;</span></span>
 <span id="cb31-2"><a href=""></a>  <span class="fu">pull</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3 4</code></pre>
@@ -391,7 +391,7 @@ $ handedness     &lt;chr&gt; "left", "left", "left", "left", "left", "left", "le
 <section id="use-the-forcats-package-to-manipulate-factors" class="slide level2">
 <h2>Use the forcats package to manipulate factors</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>cat_lovers <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>cat_lovers <span class="sc">|&gt;</span></span>
 <span id="cb36-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">handedness =</span> <span class="fu">fct_infreq</span>(handedness)) <span class="sc">|&gt;</span> </span>
 <span id="cb36-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> handedness)) <span class="sc">+</span></span>
 <span id="cb36-4"><a href=""></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -599,8 +599,8 @@ $ handedness     &lt;chr&gt; "left", "left", "left", "left", "left", "left", "le
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>flats2 <span class="ot">&lt;-</span> flats <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href=""></a>  <span class="fu">select</span>(date, depth_m) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>flats2 <span class="ot">&lt;-</span> flats <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a href=""></a>  <span class="fu">select</span>(date, depth_m) <span class="sc">|&gt;</span></span>
 <span id="cb57-3"><a href=""></a>  <span class="fu">separate</span>(date, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>))</span>
 <span id="cb57-4"><a href=""></a>flats2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -631,8 +631,8 @@ $ handedness     &lt;chr&gt; "left", "left", "left", "left", "left", "left", "le
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>flats2 <span class="sc">%&gt;%</span></span>
-<span id="cb59-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">make_date</span>(year, month, day)) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb59" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>flats2 <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">make_date</span>(year, month, day)) <span class="sc">|&gt;</span> </span>
 <span id="cb59-3"><a href=""></a>  <span class="fu">select</span>(date, depth_m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">

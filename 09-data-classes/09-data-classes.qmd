@@ -129,7 +129,7 @@ l
 ```{r}
 df
 
-df %>%
+df |>
   pull(y)
 ```
 
@@ -155,7 +155,7 @@ ggplot(cat_lovers, mapping = aes(x = handedness)) +
 ## Use the forcats package to manipulate factors
 
 ```{r}
-cat_lovers %>%
+cat_lovers |>
   mutate(handedness = fct_infreq(handedness)) |> 
   ggplot(aes(x = handedness)) +
   geom_bar()
@@ -297,8 +297,8 @@ flats |>
 ::: {.columns}
 ::: {.column width = "50%"}
 ```{r separate-date, eval=FALSE, warning = FALSE}
-flats2 <- flats %>%
-  select(date, depth_m) %>%
+flats2 <- flats |>
+  select(date, depth_m) |>
   separate(date, c("year", "month", "day"))
 flats2
 ```
@@ -318,8 +318,8 @@ Use the `make_date()` or `make_datetime` functions!
 ```{r make-date, eval=FALSE, warning = FALSE}
 #| code-line-numbers: "2"
 
-flats2 %>%
-  mutate(date = make_date(year, month, day)) %>% 
+flats2 |>
+  mutate(date = make_date(year, month, day)) |> 
   select(date, depth_m)
 ```
 :::
