@@ -1,0 +1,16 @@
+---
+title: "common-slide-things"
+format: revealjs
+editor: visual
+---
+
+## Columns
+
+::: {.columns}
+::: {.column width = "50%"}
+
+:::
+::: {.column width = "50%"}
+
+:::
+:::
