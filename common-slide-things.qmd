@@ -1,16 +1,27 @@
 ---
 title: "common-slide-things"
 format: revealjs
-editor: visual
+editor: source
 ---
 
 ## Columns
 
-::: {.columns}
+::: columns
 ::: {.column width = "50%"}
 
 :::
 ::: {.column width = "50%"}
 
+::: 
 :::
+
+## Panel tabset
+
+::: {.panel-tabset}
+
+:::
+
+## Incremental list
+::: {.incremental}
+
 :::
