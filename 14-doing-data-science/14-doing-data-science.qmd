@@ -1,31 +1,26 @@
 ---
 title: "Doing data science"
-subtitle: "<br><br> Environmental Data Science"
-author: "[https://enst222.github.io/website/](https://enst222.github.io/website/)"
-output:
-  xaringan::moon_reader:
-    css: ["../xaringan-themer.css", "../slides.css"]
-    lib_dir: libs
-    anchor_sections: FALSE
-    nature:
-      ratio: "16:9"
-      highlightLines: true
-      highlightStyle: solarized-light
-      countIncrementalSlides: false
+subtitle: "<br><br> Environmental Data Analysis and Visualization"
+format: 
+  revealjs:
+    theme: simple
+    width: 1500
+    margin: 0.05
+    scrollable: true
+slide-number: c/t
+from: markdown+emoji
+editor: 
+  markdown: 
+    wrap: 72
+execute:
+  echo: true
 ---
 
-```{r child = "../setup.Rmd"}
-```
-
-```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
 
-class: middle
-
 # What's in a data analysis?
-
----
 
 ## Five core activities of data analysis
 
@@ -35,17 +30,9 @@ class: middle
 1. Interpreting the results
 1. Communicating the results
 
-.footnote[
-Roger D. Peng and Elizabeth Matsui. "The Art of Data Science." A Guide for Anyone Who Works with Data. Skybrude Consulting, LLC (2015).
-]
-
----
-
-class: middle
+*Roger D. Peng and Elizabeth Matsui. "The Art of Data Science." A Guide for Anyone Who Works with Data. Skybrude Consulting, LLC (2015).*
 
 # Stating and refining the question
-
----
 
 ## Six types of questions
 
@@ -56,33 +43,19 @@ class: middle
 1. **Causal:** whether changing one factor will change another factor, on average, in a population
 1. **Mechanistic:** explore "how" as opposed to whether
 
-.footnote[
-Jeffery T. Leek and Roger D. Peng. "What is the question?." Science 347.6228 (2015): 1314-1315.
-]
-
----
+*Jeffery T. Leek and Roger D. Peng. "What is the question?." Science 347.6228 (2015): 1314-1315.*
 
 ## Ex: COVID-19 and Vitamin D
 
-1. **Descriptive:** frequency of hospitalizations due to COVID-19 in a set of data collected from a group of individuals
---
+::: {.incremental}
 
+1. **Descriptive:** frequency of hospitalizations due to COVID-19 in a data set collected from a group of individuals
 1. **Exploratory:** examine relationships between a range of dietary factors and COVID-19 hospitalizations
---
-
-1. **Inferential:** examine whether any relationship between taking Vitamin D supplements and COVID-19 hospitalizations found in the sample hold for the population at large
-
---
+1. **Inferential:** examine whether any relationships between taking Vitamin D supplements and COVID-19 hospitalizations found in the sample hold for the population at large
 1. **Predictive:** predict what types of people will take Vitamin D supplements during the next year
-
---
-1. **Causal:** whether the hospitalization rate differs for people with COVID-19 who were randomly assigned to take Vitamin D supplements vs. those who were not assigned to take Vitamin D 
-
---
-1. **Mechanistic:** how increased vitamin D intake leads to a reduction in the number of viral illnesses
-
----
-class:inverse
+1. **Causal:** test whether the hospitalization rate differs for people with COVID-19 who were randomly assigned to take Vitamin D supplements vs. those who were not assigned to take Vitamin D 
+1. **Mechanistic:** investigate the physiological mechanism by which increased vitamin D intake leads to a reduction in the number of viral illnesses
+:::
 
 ## Questions to ask when begining an analysis
 
@@ -92,33 +65,30 @@ class:inverse
 
 - Was the data you're working with collected in a way that introduces bias?
 
----
-class: inverse
+## Beware of confounding variables
 
-## Confounding
+Suppose I collect data on sunburns and ice cream consumption and find that higher ice cream consumption is associated with a higher probability of sunburn. 
 
-.question[
-Suppose I collect data on sunburns and ice cream consumption and find that higher ice cream consumption is associated with a higher probability of sunburn. Does that mean that ice cream consumption causes sunburn? What might be a confounding variable? Can you think of an environmental example? How can we control for confounding variables in our analyses?  
-]
----
+::: {.incremental}
+- Does that mean that ice cream consumption causes sunburn? 
+- What might be a *confounding variable*? 
+- Can you think of an example from ecology/the environment? 
+- How can we control for confounding variables in our analyses? 
+:::
 
-class: inverse
+## Beware of biased data
 
-## Bias
+Suppose I want to estimate the average number of children in households in St. Mary's County. I conduct a survey at an elementary school in the county and ask students at this elementary school how many children, including themselves, live in their house. Then, I take the average of the responses. 
 
-.question[
-Suppose I want to estimate the average number of children in households in St. Mary's County. I conduct a survey at an elementary school in the county and ask students at this elementary school how many children, including themselves, live in their house. Then, I take the average of the responses. Is this a biased or an unbiased estimate of the number of children in households in the county? If biased, will the value be an overestimate or underestimate? How can we minimze bias in our analyses?
-]
-
----
-
-class: middle
+::: {.incremental}
+- Is this a biased or an unbiased estimate of the number of children in households in the county? 
+- If biased, will the value be an overestimate or underestimate? 
+- How can we minimze bias in our analyses?
+:::
 
 # Exploratory data analysis
 
----
-
-## Checklist
+## Exploratory data analysis checklist
 
 - Formulate your question
 - Read in your data
@@ -128,19 +98,14 @@ class: middle
 - Make a plot
 - Try the easy solution first
 
----
-
 ## Formulate your question
 
-- Consider scope:
+Consider scope:
 
-  - Are air pollution levels higher on the east coast than on the west coast?
-  - Are hourly ozone levels on average higher in New York City than they are in Los Angeles?
-  - Do counties in the eastern United States have higher ozone levels than counties in the western United States?
-  
+- Are air pollution levels higher on the east coast than on the west coast?
+- Are hourly ozone levels on average higher in New York City than they are in Los Angeles?
+- Do counties in the eastern United States have higher ozone levels than counties in the western United States?
 - Most importantly: "Do I have the right data to answer this question?"
-
----
 
 ## Read in your data
 
@@ -153,8 +118,6 @@ fav_food <- read_excel("data/favourite-food.xlsx")
 fav_food
 ```
 
----
-
 ## `clean_names()`
 
 If the variable names are not formatted in snake_case, use `janitor::clean_names()`
@@ -164,27 +127,22 @@ library(janitor)
 fav_food %>% clean_names()  
 ```
 
----
-
 ## Case study: NYC Squirrels!
 
 - [The Squirrel Census](https://www.thesquirrelcensus.com/) is a multimedia science, design, and storytelling project focusing on the Eastern gray (*Sciurus carolinensis*). They count squirrels and present their findings to the public.
 - This table contains squirrel data for each of the 3,023 sightings, including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and with humans.
 
 ```{r}
-#install_github("mine-cetinkaya-rundel/nycsquirrels18")
+# devtools::install_github("mine-cetinkaya-rundel/nycsquirrels18")
 library(nycsquirrels18)
 ```
 
----
+## Look at dataset info
 
-## Locate the codebook
-
-[mine-cetinkaya-rundel.github.io/nycsquirrels18/reference/squirrels.html](https://mine-cetinkaya-rundel.github.io/nycsquirrels18/reference/squirrels.html)
-
-<br><br>
-
---
+<br>
+```{r}
+?squirrels
+```
 
 ## Check the dimensions
 
@@ -192,68 +150,54 @@ library(nycsquirrels18)
 dim(squirrels)
 ```
 
----
-
 ## Look at the top...
 
 ```{r}
-squirrels %>% head()
+squirrels |>
+  head()
 ```
-
----
 
 ## ...and the bottom
 
-.small[
 ```{r}
-squirrels %>% tail()
+squirrels |> 
+  tail()
 ```
-]
-
----
 
 ## Validate with at least one external data source
 
-.pull-left[
-```{r echo=FALSE}
+::: columns
+::: {.column width = "50%"}
+```{r}
 squirrels %>%
   select(long, lat) %>%
   print(n = 15)
 ```
-]
-.pull-right[
-```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/central-park-coords.png")
-```
-]
 
----
+:::
+::: {.column width = "50%"}
+![](img/central-park-coords.png)
+
+::: 
+:::
 
 ## Make a plot
 
-```{r out.width="45%"}
+```{r}
 ggplot(squirrels, aes(x = long, y = lat)) +
   geom_point(alpha = 0.2)
 ```
 
---
-
-.pull-left-wide[
-**Hypothesis:** There will be a higher density of sightings on the perimeter than inside the park.
-]
-
----
+# **Hypothesis:** There will be a higher density of sightings on the perimeter than inside the park.
 
 ## Try the easy solution first
 
-.panelset[
-
-.panel[.panel-name[Plot]
+::: {.panel-tabset}
+## Plot 
 ```{r ref.label="easy-solution", echo = FALSE}
 ```
-]
 
-.panel[.panel-name[Code]
+## Code
 ```{r easy-solution, fig.show = "hide"}
 squirrels <- squirrels %>%
   separate(hectare, into = c("NS", "EW"), sep = 2, remove = FALSE) %>%
@@ -262,22 +206,17 @@ squirrels <- squirrels %>%
 ggplot(squirrels, aes(x = long, y = lat, color = where)) +
   geom_point(alpha = 0.2)
 ```
-]
-
-]
-
----
+:::
 
 ## Then go deeper...
 
-.panelset[
+::: {.panel-tabset}
 
-.panel[.panel-name[Plot]
+## Plot
 ```{r ref.label="hex-plot", echo = FALSE, warning = FALSE}
 ```
-]
 
-.panel[.panel-name[Code]
+## Code
 ```{r hex-plot, fig.show = "hide", warning = FALSE}
 hectare_counts <- squirrels %>%
   group_by(hectare) %>%
@@ -296,21 +235,8 @@ squirrels %>%
   ggplot(aes(x = centroid_x, y = centroid_y, color = n)) +
   geom_hex()
 ```
-]
+:::
 
-]
-
----
-
-## The squirrel is staring at me!
-
-```{r}
-squirrels %>%
-  filter(str_detect(other_interactions, "star")) %>%
-  select(shift, age, other_interactions)
-```
-
----
 
 ## Communicating for your audience
 
