@@ -15,6 +15,16 @@ editor: source
 ::: 
 :::
 
+## Incremental columns
+::: columns
+::: {.column width = "50%" .fragment}
+
+:::
+::: {.column width = "50%" .fragment}
+
+::: 
+:::
+
 ## Panel tabset
 
 ::: {.panel-tabset}

@@ -1,0 +1,27 @@
+---
+title: "Functions: The details"
+subtitle: "<br><br> Environmental Data Analysis and Visualization"
+format: 
+  revealjs:
+    theme: simple
+    width: 1500
+    margin: 0.05
+    scrollable: true
+slide-number: c/t
+from: markdown+emoji
+editor: 
+  markdown: 
+    wrap: 72
+execute:
+  echo: true
+---
+
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+# Mutate functions
+
+# Summary functions
+
+# Data frame functions
