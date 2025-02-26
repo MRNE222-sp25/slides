@@ -196,6 +196,7 @@ We can use the `str_sub()` and `str_to_upper()` functions to programatically det
 ::: columns
 ::: {.column width = "50%"}
 ```{r}
+word <- "hello"
 word
 ```
 :::
@@ -337,7 +338,7 @@ diamonds
 
 ## Get to know tidy evaluation
 
-**Want:** Calculate the mean of a variable (`mean_var`) based on a grouping variable (`group_var`) from the dataframe `df`. 
+**Want:** Calculate the mean of a variable (`mean_var`) based on a grouping variable (`group_var`) from a dataframe `df`. 
 ```{r}
 grouped_mean <- function(df, group_var, mean_var) {
   df |> 
@@ -352,13 +353,14 @@ grouped_mean <- function(df, group_var, mean_var) {
 Why do we get an error?
 
 ![](img/indirection_error.png)
+
 ## Get to know tidy evaluation
 
 Why do we get an error?
 
 ![](img/indirection_error.png)
 
-* When function arguments are the name of a column, R takes it literally.
+When function arguments indirectly refer to the name of a column, R takes it literally.
 
 ## Get to know tidy evaluation
 
@@ -370,6 +372,10 @@ diamonds |>
   group_by(cut) |> 
   summarize(mean(carat))
 ```
+
+* group by `cut` (or any other grouping variable)
+* calculate mean `carat` (or any other numeric variable)
+
 :::
 ::: {.column width = "50%" .fragment}
 What is actually happening:
@@ -379,9 +385,185 @@ diamonds |>
   summarize(mean(mean_var))
 ```
 
-Tidy evaluation allows us to refer to variable names directly when using tidyverse functions. But special treatment is required when you use these functions *inside another function* and column names are an argument of your custom function. 
+`group_var` and `mean_var` aren't column names, they are the names of the arguments we defined in the `grouped_mean()` function.
+
 ::: 
 :::
 
+## Get to know tidy evaluation
+
+* Tidy evaluation allows us to refer to variable names directly when using tidyverse functions. However, special treatment is required when you use functions that use tidy evaluation. 
+
+* `{{}}` are the special treatment we need to apply
+
+* How do you know which functions use tidy evaluation? You'll know if you get an the error that your variable wasn't found. You can also look in a function's help file. Under **Arguments**, `<tidy-select>` or `<data-masking>` will be listed.
 
 
+## Proper data frame function with `{{}}`
+
+**Want:** Calculate the mean of a variable (`mean_var`) based on a grouping variable (`group_var`) from the dataframe `df`. 
+
+```{r}
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by({{group_var}}) |> 
+    summarize(mean({{mean_var}}))
+}
+```
+
+The `{{}}` tells R to use the value you supplied for the `grouped_var` and `mean_var` arguments, not the literal argument names.
+
+## Proper data frame function with `{{}}`
+
+**Want:** Calculate the mean of a variable (`mean_var`) based on a grouping variable (`group_var`) from the dataframe `df`. 
+
+```{r}
+diamonds |> 
+  grouped_mean(cut, carat)
+```
+
+# Plot functions
+
+## Plot functions
+
+**Want:** I need to make a lot of histograms with different binwidths.
+
+::: columns
+::: {.column width = "50%"}
+
+```{r}
+diamonds |> 
+  ggplot(aes(x = carat)) +
+  geom_histogram(binwidth = 0.5)
+```
+:::
+::: {.column width = "50%"}
+```{r}
+diamonds |> 
+  ggplot(aes(x = carat)) +
+  geom_histogram(binwidth = 0.05)
+```
+::: 
+:::
+
+## Make a plot function
+
+::: columns
+::: {.column width = "50%" .fragment}
+
+Define the function. Put arguments that indirectly refer to column names in `{{}}`.
+```{r}
+histogram <- function(df, var, binwidth){
+  df |> 
+    ggplot(aes(x = {{ var }})) +
+    geom_histogram(binwidth = binwidth)
+}
+```
+:::
+::: {.column width = "50%" .fragment}
+
+Use the function to make a plot.
+```{r}
+diamonds |> 
+  histogram(carat, 0.1)
+```
+::: 
+:::
+
+## Optional: Add components after running plot function
+
+Our `histogram()` function returns a ggplot2 plot, meaning you can still add additional components if you want. Just remember to switch from |> to +:
+```{r}
+#| code-line-numbers: "3"
+
+diamonds |> 
+  histogram(carat, 0.1) +
+  labs(x = "Size (in carats)", y = "Number of diamonds")
+
+```
+
+## Plot function with more variables
+
+Function to eyeball whether or not a dataset is linear by overlaying a smooth line and a straight line:
+
+::: columns
+::: {.column width = "60%" .fragment}
+```{r}
+linearity_check <- function(df, x, y) {
+  df |>
+    ggplot(aes(x = {{ x }}, y = {{ y }})) +
+    geom_point() +
+    geom_smooth(method = "loess", formula = y ~ x, color = "red", se = FALSE) +
+    geom_smooth(method = "lm", formula = y ~ x, color = "blue", se = FALSE) 
+}
+```
+
+:::
+::: {.column width = "40%" .fragment}
+Run the function using the `starwars` dataset:
+```{r}
+starwars |> 
+  filter(mass < 1000) |> 
+  linearity_check(mass, height)
+```
+::: 
+:::
+
+## Make a function to wrangle then plot
+
+::: columns
+::: {.column width = "60%" .fragment}
+Use the `fct_infreq()` function to sort factor levels according to frequency, then plot in a horizontal bar chart:
+```{r}
+sorted_bars <- function(df, var) {
+  df |> 
+    mutate({{ var }} := fct_rev(fct_infreq({{ var }})))  |>
+    ggplot(aes(y = {{ var }})) +
+    geom_bar()
+}
+```
+
+:::
+::: {.column width = "40%" .fragment}
+Use the function to wangle + plot:
+```{r}
+diamonds |> 
+  sorted_bars(clarity)
+```
+
+::: 
+:::
+
+## `:=` The "walrus operator"
+
+* You can only use `=` in a tidy function like `mutate()` when referring directly to a variable name: <br>
+`mutate(new_variable = ...)`
+<br>
+* If you want to indirectly use a user-supplied variable name as an argument in your function, `:=` let's R know to look for the argument name supplied: <br>
+`mutate({{var}} := ...)` 
+
+## Label plots in a function based on user inputs
+
+::: columns
+::: {.column width = "60%" .fragment}
+Add a plot title that labels the variable and binwidth:
+```{r}
+#| code-line-numbers: "2,3|7"
+
+histogram <- function(df, var, binwidth) {
+  label <- rlang::englue("A histogram of {{var}} with binwidth {binwidth}")
+  
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram(binwidth = binwidth) + 
+    labs(title = label)
+}
+```
+:::
+::: {.column width = "40%" .fragment}
+Make a plot:
+```{r}
+diamonds |> histogram(carat, 0.1)
+```
+::: 
+:::

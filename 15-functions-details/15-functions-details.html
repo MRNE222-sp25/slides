@@ -362,9 +362,10 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>word</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>word <span class="ot">&lt;-</span> <span class="st">"hello"</span></span>
+<span id="cb22-2"><a href=""></a>word</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Hello"</code></pre>
+<pre><code>[1] "hello"</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -384,7 +385,7 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>word</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Hello"</code></pre>
+<pre><code>[1] "hello"</code></pre>
 </div>
 </div>
 </div><div class="column fragment" style="width:70%;">
@@ -534,7 +535,7 @@
 </section>
 <section id="get-to-know-tidy-evaluation-1" class="slide level2">
 <h2>Get to know tidy evaluation</h2>
-<p><strong>Want:</strong> Calculate the mean of a variable (<code>mean_var</code>) based on a grouping variable (<code>group_var</code>) from the dataframe <code>df</code>.</p>
+<p><strong>Want:</strong> Calculate the mean of a variable (<code>mean_var</code>) based on a grouping variable (<code>group_var</code>) from a dataframe <code>df</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
 <span id="cb45-2"><a href=""></a>  df <span class="sc">|&gt;</span> </span>
@@ -546,14 +547,15 @@
 <section id="get-to-know-tidy-evaluation-2" class="slide level2">
 <h2>Get to know tidy evaluation</h2>
 <p>Why do we get an error?</p>
-<p><img data-src="img/indirection_error.png"> ## Get to know tidy evaluation</p>
-<p>Why do we get an error?</p>
-<p><img data-src="img/indirection_error.png"></p>
-<ul>
-<li>When function arguments are the name of a column, R takes it literally.</li>
-</ul>
-</section>
+
+<img data-src="img/indirection_error.png" class="r-stretch"></section>
 <section id="get-to-know-tidy-evaluation-3" class="slide level2">
+<h2>Get to know tidy evaluation</h2>
+<p>Why do we get an error?</p>
+
+<img data-src="img/indirection_error.png" class="r-stretch"><p>When function arguments indirectly refer to the name of a column, R takes it literally.</p>
+</section>
+<section id="get-to-know-tidy-evaluation-4" class="slide level2">
 <h2>Get to know tidy evaluation</h2>
 <div class="columns">
 <div class="column fragment" style="width:50%;">
@@ -563,6 +565,10 @@
 <span id="cb46-2"><a href=""></a>  <span class="fu">group_by</span>(cut) <span class="sc">|&gt;</span> </span>
 <span id="cb46-3"><a href=""></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(carat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>group by <code>cut</code> (or any other grouping variable)</li>
+<li>calculate mean <code>carat</code> (or any other numeric variable)</li>
+</ul>
 </div><div class="column fragment" style="width:50%;">
 <p>What is actually happening:</p>
 <div class="cell">
@@ -570,7 +576,213 @@
 <span id="cb47-2"><a href=""></a>  <span class="fu">group_by</span>(group_var) <span class="sc">|&gt;</span> </span>
 <span id="cb47-3"><a href=""></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(mean_var))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Tidy evaluation allows us to refer to variable names directly when using tidyverse functions. But special treatment is required when you use these functions <em>inside another function</em> and column names are an argument of your custom function.</p>
+<p><code>group_var</code> and <code>mean_var</code> aren’t column names, they are the names of the arguments we defined in the <code>grouped_mean()</code> function.</p>
+</div></div>
+</section>
+<section id="get-to-know-tidy-evaluation-5" class="slide level2">
+<h2>Get to know tidy evaluation</h2>
+<ul>
+<li><p>Tidy evaluation allows us to refer to variable names directly when using tidyverse functions. However, special treatment is required when you use functions that use tidy evaluation.</p></li>
+<li><p><code>{{}}</code> are the special treatment we need to apply</p></li>
+<li><p>How do you know which functions use tidy evaluation? You’ll know if you get an the error that your variable wasn’t found. You can also look in a function’s help file. Under <strong>Arguments</strong>, <code>&lt;tidy-select&gt;</code> or <code>&lt;data-masking&gt;</code> will be listed.</p></li>
+</ul>
+</section>
+<section id="proper-data-frame-function-with" class="slide level2">
+<h2>Proper data frame function with <code>{{}}</code></h2>
+<p><strong>Want:</strong> Calculate the mean of a variable (<code>mean_var</code>) based on a grouping variable (<code>group_var</code>) from the dataframe <code>df</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>grouped_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group_var, mean_var) {</span>
+<span id="cb48-2"><a href=""></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb48-3"><a href=""></a>    <span class="fu">group_by</span>({{group_var}}) <span class="sc">|&gt;</span> </span>
+<span id="cb48-4"><a href=""></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>({{mean_var}}))</span>
+<span id="cb48-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>{{}}</code> tells R to use the value you supplied for the <code>grouped_var</code> and <code>mean_var</code> arguments, not the literal argument names.</p>
+</section>
+<section id="proper-data-frame-function-with-1" class="slide level2">
+<h2>Proper data frame function with <code>{{}}</code></h2>
+<p><strong>Want:</strong> Calculate the mean of a variable (<code>mean_var</code>) based on a grouping variable (<code>group_var</code>) from the dataframe <code>df</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb49-2"><a href=""></a>  <span class="fu">grouped_mean</span>(cut, carat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  cut       `mean(carat)`
+  &lt;ord&gt;             &lt;dbl&gt;
+1 Fair              1.05 
+2 Good              0.849
+3 Very Good         0.806
+4 Premium           0.892
+5 Ideal             0.703</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="plot-functions" class="title-slide slide level1 center">
+<h1>Plot functions</h1>
+
+</section>
+<section id="plot-functions-1" class="slide level2">
+<h2>Plot functions</h2>
+<p><strong>Want:</strong> I need to make a lot of histograms with different binwidths.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb51-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat)) <span class="sc">+</span></span>
+<span id="cb51-3"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb52-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat)) <span class="sc">+</span></span>
+<span id="cb52-3"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="make-a-plot-function" class="slide level2">
+<h2>Make a plot function</h2>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>Define the function. Put arguments that indirectly refer to column names in <code>{{}}</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, binwidth){</span>
+<span id="cb53-2"><a href=""></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb53-3"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span></span>
+<span id="cb53-4"><a href=""></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> binwidth)</span>
+<span id="cb53-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>Use the function to make a plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href=""></a>  <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="optional-add-components-after-running-plot-function" class="slide level2">
+<h2>Optional: Add components after running plot function</h2>
+<p>Our <code>histogram()</code> function returns a ggplot2 plot, meaning you can still add additional components if you want. Just remember to switch from |&gt; to +:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href=""></a>  <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb55-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Size (in carats)"</span>, <span class="at">y =</span> <span class="st">"Number of diamonds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-35-1.png" width="960" class="r-stretch"></section>
+<section id="plot-function-with-more-variables" class="slide level2">
+<h2>Plot function with more variables</h2>
+<p>Function to eyeball whether or not a dataset is linear by overlaying a smooth line and a straight line:</p>
+<div class="columns">
+<div class="column fragment" style="width:60%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a>linearity_check <span class="ot">&lt;-</span> <span class="cf">function</span>(df, x, y) {</span>
+<span id="cb56-2"><a href=""></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }})) <span class="sc">+</span></span>
+<span id="cb56-4"><a href=""></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb56-5"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb56-6"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb56-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:40%;">
+<p>Run the function using the <code>starwars</code> dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href=""></a>  <span class="fu">filter</span>(mass <span class="sc">&lt;</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb57-3"><a href=""></a>  <span class="fu">linearity_check</span>(mass, height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="make-a-function-to-wrangle-then-plot" class="slide level2">
+<h2>Make a function to wrangle then plot</h2>
+<div class="columns">
+<div class="column fragment" style="width:60%;">
+<p>Use the <code>fct_infreq()</code> function to sort factor levels according to frequency, then plot in a horizontal bar chart:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>sorted_bars <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
+<span id="cb58-2"><a href=""></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb58-3"><a href=""></a>    <span class="fu">mutate</span>({{ var }} <span class="sc">:</span><span class="er">=</span> <span class="fu">fct_rev</span>(<span class="fu">fct_infreq</span>({{ var }})))  <span class="sc">|&gt;</span></span>
+<span id="cb58-4"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> {{ var }})) <span class="sc">+</span></span>
+<span id="cb58-5"><a href=""></a>    <span class="fu">geom_bar</span>()</span>
+<span id="cb58-6"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:40%;">
+<p>Use the function to wangle + plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> </span>
+<span id="cb59-2"><a href=""></a>  <span class="fu">sorted_bars</span>(clarity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-39-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="the-walrus-operator" class="slide level2">
+<h2><code>:=</code> The “walrus operator”</h2>
+<ul>
+<li>You can only use <code>=</code> in a tidy function like <code>mutate()</code> when referring directly to a variable name: <br> <code>mutate(new_variable = ...)</code> <br></li>
+<li>If you want to indirectly use a user-supplied variable name as an argument in your function, <code>:=</code> let’s R know to look for the argument name supplied: <br> <code>mutate({{var}} := ...)</code></li>
+</ul>
+</section>
+<section id="label-plots-in-a-function-based-on-user-inputs" class="slide level2">
+<h2>Label plots in a function based on user inputs</h2>
+<div class="columns">
+<div class="column fragment" style="width:60%;">
+<p>Add a plot title that labels the variable and binwidth:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60" data-code-line-numbers="2,3|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>histogram <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, binwidth) {</span>
+<span id="cb60-2"><a href=""></a>  label <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">englue</span>(<span class="st">"A histogram of {{var}} with binwidth {binwidth}"</span>)</span>
+<span id="cb60-3"><a href=""></a>  </span>
+<span id="cb60-4"><a href=""></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb60-5"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> {{ var }})) <span class="sc">+</span> </span>
+<span id="cb60-6"><a href=""></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> binwidth) <span class="sc">+</span> </span>
+<span id="cb60-7"><a href=""></a>    <span class="fu">labs</span>(<span class="at">title =</span> label)</span>
+<span id="cb60-8"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column fragment" style="width:40%;">
+<p>Make a plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>diamonds <span class="sc">|&gt;</span> <span class="fu">histogram</span>(carat, <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="15-functions-details_files/figure-revealjs/unnamed-chunk-41-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 </div></div>
 
 </section></section>
