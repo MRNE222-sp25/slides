@@ -24,6 +24,12 @@ library(gghighlight)
 theme_set(theme_light() + theme(text = element_text(size = 15)))
 ```
 
+## Before we begin
+
+<br>
+
+Compare your responses to ae-12-iteration to the solutions file, now available on GitHub: [https://github.com/MRNE222-sp25-activities/ae-12-iteraton/blob/main/ae-12-iteration_solutions.md](https://github.com/MRNE222-sp25-activities/ae-12-iteraton/blob/main/ae-12-iteration_solutions.md)
+
 ## Recall last time...
 
 We used `purrr::map()` to iteratively read in multiple .csv files:
