@@ -6,21 +6,21 @@ editor: source
 
 ## Columns
 
-::: columns
-::: {.column width = "50%"}
+::: {.columns}
+::: {.column width="50%"}
 
 :::
-::: {.column width = "50%"}
+::: {.column width="50%"}
 
 ::: 
 :::
 
 ## Incremental columns
-::: columns
-::: {.column width = "50%" .fragment}
+::: {.columns}
+::: {.column width="50%" .fragment}
 
 :::
-::: {.column width = "50%" .fragment}
+::: {.column width="50%" .fragment}
 
 ::: 
 :::
