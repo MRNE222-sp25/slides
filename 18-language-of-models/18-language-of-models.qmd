@@ -327,11 +327,11 @@ ggplot(data = pp, aes(x = width_in, y = height_in)) +
 
 ## Code
 ```{r height-width-plot-residuals, fig.show="hide", warning=FALSE}
-ht_wt_fit <- linear_reg() %>%
+ht_wt_fit <- linear_reg() |>
   fit(height_in ~ width_in, data = pp)
 
 ht_wt_fit_tidy <- tidy(ht_wt_fit$fit) 
-ht_wt_fit_aug  <- augment(ht_wt_fit$fit) %>%
+ht_wt_fit_aug  <- augment(ht_wt_fit$fit) |>
   mutate(res_cat = ifelse(.resid > 0, TRUE, FALSE))
 
 ggplot(data = ht_wt_fit_aug) +

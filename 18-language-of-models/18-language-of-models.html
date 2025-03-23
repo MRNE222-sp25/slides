@@ -481,11 +481,11 @@
 </div>
 <div id="tabset-1-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>ht_wt_fit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>ht_wt_fit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href=""></a>  <span class="fu">fit</span>(height_in <span class="sc">~</span> width_in, <span class="at">data =</span> pp)</span>
 <span id="cb8-3"><a href=""></a></span>
 <span id="cb8-4"><a href=""></a>ht_wt_fit_tidy <span class="ot">&lt;-</span> <span class="fu">tidy</span>(ht_wt_fit<span class="sc">$</span>fit) </span>
-<span id="cb8-5"><a href=""></a>ht_wt_fit_aug  <span class="ot">&lt;-</span> <span class="fu">augment</span>(ht_wt_fit<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href=""></a>ht_wt_fit_aug  <span class="ot">&lt;-</span> <span class="fu">augment</span>(ht_wt_fit<span class="sc">$</span>fit) <span class="sc">|&gt;</span></span>
 <span id="cb8-6"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">res_cat =</span> <span class="fu">ifelse</span>(.resid <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
 <span id="cb8-7"><a href=""></a></span>
 <span id="cb8-8"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data =</span> ht_wt_fit_aug) <span class="sc">+</span></span>
